@@ -1,0 +1,1 @@
+document.write("<a href='javascript:void(0);' class='font2_2' onclick=\"OpenPopup('login');return false;\" >µÇÂ¼</a>&nbsp;/&nbsp;<a href='javascript:void(0);' class='font2_2' onclick=\"OpenPopup('reg');return false;\" >×¢²á</a>&nbsp;/&nbsp;<a href='javascript:void(0);' class='font2_2' onclick=\"OpenPopup('missPwd');return false;\" >Íü¼ÇÃÜÂë</a>&nbsp;&nbsp;&nbsp;&nbsp;");

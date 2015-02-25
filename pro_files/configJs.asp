@@ -1,0 +1,1 @@
+var lastDate = '';var lastMonth = '';var isAutoHomeHtml = 'false';var todayDate = '2015/2/25';var todayMonth = '2';

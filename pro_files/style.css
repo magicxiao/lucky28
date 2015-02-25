@@ -1,0 +1,43 @@
+/* 蓝色 */
+#dialogBoxClose	{ border:none; width:42px; height:17px; background:url(close.gif); cursor:pointer; }	/* 关闭按钮 */
+#dialogBoxBG	{ background-color:#000000; }	/* 蒙层色 */
+#dialogBox		{ border:#66ccff 1px solid; padding:1px; background:#ffffff; }	/* 主框架 */
+#dialogBoxMain	{ background-color:#ffffff; }	/* 主体 */
+#dialogBoxHeader{ height:32px; background:url(top_bg.gif); }	/* 头部 */
+#dialogBoxTitle	{ color:#20689a;font-size:14px;font-weight:bold;text-align:left; }	/* 标题 */
+#dialogBody		{ background:url(main_top.gif) repeat-x; width:100%; color:#20689a; padding:10px 5px 5px 5px; }
+#dialogBody .button1 {
+	width:61px; height:25px; color:#2e7ac8; font-weight:bold; background:url(button1.gif) no-repeat; cursor:pointer; border:none;
+}
+#dialogBody .button2 {
+	width:61px; height:25px; color:#2e7ac8; font-weight:bold; background:url(button2.gif) no-repeat; cursor:pointer; border:none;
+}
+
+
+
+#dialogBody table.style1		{ border-top:1px #cde1eb solid; border-left:1px #cde1eb solid; }
+#dialogBody table.style1 thead	{ text-align:center; background:#e9f3f9; }
+#dialogBody table.style1 tbody	{ text-align:center; }
+#dialogBody table.style1 tfoot	{ text-align:center; }
+#dialogBody table.style1 td		{ border-right:1px #cde1eb solid; border-bottom:1px #cde1eb solid; padding:3px; }
+
+#dialogBody .alertBox	{ float:left; width:97%; padding:3px; line-height:1.4; background:#e5ebfc; border:1px #c2d1f6 solid; color:#203b9a; }
+#dialogBody .alertBox2	{ float:left; width:97%; padding:3px; line-height:1.4; background:#e7f9f4; border:1px #c8f0e4 solid; color:#2e8c77; }
+
+#dialogBody .bf dl	{ margin:8px;*margin:0px; padding:0px; }
+#dialogBody dl	{ margin:8px;*margin:3px; padding:0px; }
+#dialogBody dl dt { float:left; text-align:right; width:120px; padding-top:5px; }
+#dialogBody dl dd { float:left; text-align:left; }
+#dialogBody dl dd .regNote { overflow-x:hidden; overflow:auto; width:350px; height:80px; border:#a0d4eb 1px solid; padding:5px; margin-left:0px;#margin-left:3px;_margin-left:3px; }
+
+#dialogBody center { margin-top:20px; margin-bottom:10px; }
+
+#dialogBody input.text	{ width:200px; height:18px; line-height:18px; padding-left:2px; border:#a0d4eb 1px solid; }
+#dialogBody textarea.text	{ width:200px; height:60px; border:#a0d4eb 1px solid; }
+#dialogBody dl dd .select		{ border:#a0d4eb 1px solid; position:absolute; overflow:hidden; margin-left:0px;#margin-left:3px;_margin-left:3px; margin-bottom:2px; }
+#dialogBody dl dd .select select	{ margin:-1px; }
+
+
+#dialogBody .mark		{ width:99%; height:22px; padding:0 3px 0 3px; border-bottom:1px #c2e4f6 solid; margin-top:6px; margin-bottom:10px; }
+#dialogBody .mark1		{ float:left; width:66px; height:22px; padding:0 3px 0 3px; line-height:22px; background:#ffffff; border:1px #c2e4f6 solid; border-bottom:0; text-align:center; margin-left:8px; _position:relative;_top:1px; color:#000000; font-weight:bold; }
+#dialogBody .mark2		{ float:left; width:66px; height:21px; padding:0 3px 0 3px; line-height:22px; background:#e5f4fc; border:1px #c2e4f6 solid; cursor:pointer; text-align:center; margin-left:8px; _position:relative;_top:1px; }
