@@ -9,8 +9,30 @@ async   = require 'async'
 url     = "http://www.bwlc.gov.cn/bulletin/keno.html"
 
 _sqlLine = (arr) ->
+  nums = arr[2].split(',')
+  nums = _.map nums, (n) ->
+    parseInt n
+  nums = _.sortBy nums, (n) ->
+    n
+  arr1 = nums.slice 0, 6
+  arr2 = nums.slice 6, 12
+  arr3 = nums.slice 12, 18
+  num1 = 0
+  num2 = 0
+  num3 = 0
+  _.each arr1, (n) ->
+    n = parseInt n
+    num1+= n
+  _.each arr2, (n) ->
+    n = parseInt n
+    num2+= n
+  _.each arr3, (n) ->
+    n = parseInt n
+    num3+= n
+  luckynum = num1 % 10 + num2 % 10 + num3 % 10
+
   datetime = "#{arr[4]} #{arr[5]}"
-  "(#{arr[1]}, #{arr[2]}, #{arr[3]}, '#{datetime}')"
+  "(#{arr[1]}, #{luckynum}, #{arr[2]}, #{arr[3]}, '#{datetime}')"
 
 handle = (config, callback) ->
   async.waterfall [
