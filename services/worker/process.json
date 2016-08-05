@@ -1,0 +1,13 @@
+{
+  "apps": [{
+    "name": "task-worker",
+    "script": "worker.coffee",
+    "interpreter": "iced",
+    "max_memory_restart": "1G"
+  },{
+    "name": "task-creator",
+    "script": "creator.coffee",
+    "interpreter": "iced",
+    "max_memory_restart": "1G"
+  }]
+}

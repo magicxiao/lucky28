@@ -1,0 +1,582 @@
+<!DOCTYPE HTML><html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>北京福彩网</title>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="stylesheet" href="/css/base.css" />
+	<link rel="stylesheet" href="/css/index.css" />
+	<link rel="stylesheet" href="/css/article.css" />
+	<script src="/js/jquery-1.9.1.min.js"></script>
+	<script src="/js/plugin.js"></script>
+    <script src="/js/util.js"></script>
+	<script src="/js/juicer-min.js"></script>
+      <script src="/js/alert-24.js"></script>
+    <script>
+        var grurl = "";
+        var gsurl = "";
+    </script>
+  <script>juicer.set({'tag::interpolateOpen': '@{'});</script>
+	<style>
+	#banner img{width:624px;height:78px;margin-top:12px;}
+	#topbar{height:26px;padding-left:22px;color:#ccc;padding-top: 10px;}
+	.alipay{width:130px;height: 25px;position: absolute;margin: 5px 0 0 110px;}
+	.acc{width:150px;position: absolute;margin: 5px 0 0 120px;padding:0 10px;color:#606060;z-index:100000;}
+	.rec{width:200px;position: absolute;margin: 5px 0 0 200px;color:#606060;}
+	.rec td{text-align:center;}
+	.bd{background: #FFF;border: 1px solid #ccc;}
+	.bb{border-bottom: 1px solid #ccc;}
+	.l20{line-height: 22px;color:#666;}
+	.arr{position:absolute;margin: 9px 0 0 4px;;+margin-top:5px;border-color: #ccc transparent transparent;border-style:solid dashed;border-width:7px 5px 0;line-height:0;-moz-transition:all .1s ease 0s;-webkit-transition:all .1s ease 0s;transition:all .1s ease 0s;}
+	#tab_porder tr{height:20px;line-height:20px;}
+	.hlinks a{display:inline;padding:3px 6px;background:#ececec;color: #333;}
+	.hlinks a:hover{background:#fdd0d1;color: #333;}
+	</style>
+</head>
+<body>
+<script>
+$(function(){
+	var $rec=$('.rec'),$acc=$('.acc'),$alipy=$('.alipay');
+		$('#tz').delay(300).hover(function(){
+			$rec.show();
+			var _box=$('#tab_porder');
+      var tpl = $('#tpl_porder').html();      
+			$.getJSON('/my/getLotteryOrders.html?startTime=2012-12-31', function(data){
+          var html = juicer(tpl, data);
+          _box.html(html);
+          var playType=_box.find('.typeId');
+		      for(var i=0;i<playType.length;i++){//翻译彩种
+		      	var typeNum=playType.eq(i).html(),typeText;
+		      	switch(typeNum){
+		      		case '120':
+						  typeText='双色球';
+						  break;
+						  case '121':
+						  typeText='3D';
+						  break;
+						  case '119':
+						  typeText='快乐8';
+						  break;
+						  case '122':
+						  typeText='PK拾';
+						  break;
+              case '123':
+						  typeText='快3';
+						  break;
+						  case '1000043':
+						  typeText='七乐彩';
+						  break;
+		      	};		      	
+		      playType.eq(i).html(typeText);
+		      };
+		      
+		      for(var j=0;j<$('.status').length;j++){
+          	var dcolor=$('.status').eq(j).html().replace(/(^\s+)|(\s+$)/g,""),type='';
+          		switch(dcolor){
+			      		case "投注成功":
+							  type='rgb(6, 158, 6)';
+							  break;
+							  case "中奖":
+							  type='rgb(245, 8, 8)';
+							  break;
+							  case "未中奖":
+							  type='rgb(83, 81, 81)';
+							  break;
+							  case "等待投注":
+							  type='rgb(241, 123, 14)';
+							  break;
+							  case "投注失败":
+							  type='rgb(245, 87, 87)';
+							  break;
+		      	};
+		      	$('.status').eq(j).css('color',type);
+          }
+        });
+			
+		},function(){
+			$rec.hide();
+		});
+		$('#zh').delay(300).hover(function(){
+			$acc.show();
+			$.getJSON('/my/userBrief.html?t=' + new Date().getTime(), function(data) {
+					$('.abalance').html(changeTwoDecimal(data.balance));
+					$('.balance').html(changeTwoDecimal((parseFloat(data.balance*100)-parseFloat(data.availbalance*100))/100));
+			});
+		},function(){
+			$acc.hide();
+		});
+		$('#hz').delay(300).hover(function(){
+			$alipy.show();
+		},function(){
+			$alipy.hide();
+		});
+
+		Date.prototype.Format = function (fmt) { //格式化时间
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+	};
+		//退出		
+		$('#logout').click(function(e){
+                    var curUri = location.href;
+					$.ajax({url:'/Login.do',data:{'resType':'json','action':'logout'},cache:false}).done(function() {
+                            if (curUri.indexOf("/my/") !== -1) {
+                                location.href='/';
+                            } else {
+                                location.reload();
+                            }
+					});
+					e.preventDefault();//取消了事件的默认行为
+				});
+});
+</script>
+<div id="container">
+	<div id="header" class="sdw">
+		<div id="topbar" class="cf">
+			<div class="l out pr5" >
+				<div class="l20">
+                    <script>
+                    function gotoLogin() {
+                        var url = window.location.href;
+                        var from = '';
+                        if (url && url.length > 0) {
+                            from = url;
+                        }
+                        
+                        window.location = "/my/login.html" + 
+                                ((from.length>0)?"?from=" + encodeURI(from):"");
+                    }
+                    </script>
+					<a href="#" onclick="gotoLogin();return false;" class="login br4">登录</a> ｜ 
+					<a href="/my/reg.html">免费注册</a> ｜ 
+					<span id="hz">
+						<a href="javascript:;" class="pr10">合作账户登录<i class="arr"></i></a>
+						<div class="alipay dn">
+							<a href="/login/alipay/redirect.html"><img src="/images/zfbexpress.jpg" width="122" height="22" style="margin-bottom:-5px;*vertical-align:-5px;"/></a>
+						</div>
+					</span>
+				</div>
+				 
+			</div>
+
+			<div class="r lh22 pr10"><a href="http://bbs.bwlc.net">论坛</a>　｜　<a href="/help/faqreg.jsp">帮助中心</a>　｜　<span style="color:#606060">客服电话：010-8202 5099</span></div>
+			<div class="msgBox"></div>
+		</div>
+		<div class="top cf">
+			<a href="/" id="logo" title="北京市福利彩票发行中心"></a>
+		</div>
+<a href="/dl/DownloadApp.html"  title="北京市福利彩票发行中心">		<div style="margin-left:600px;margin-top:-30px;">
+<img src="http://211.147.1.142:9890/images/phone.gif"/>
+			
+		手机客户端</div></a>
+<a href="/dl/prizer.jsp"  title="北京市福利彩票发行中心">         <div style="margin-left:750px;margin-top:-38px;">
+<img src="http://211.147.1.142:9890/images/phone.gif"/>
+        
+                兑奖客户端</div></a>
+		<div id="navC">
+<ul id="nav" class="cf ">	<li class="menuItem"><a href="/" class="db rs ml5">首页</a></li>
+	<li class="menuItem">
+		<a href="javascript:;" class="db">福彩资讯<i class="nav_arr"></i></a>
+		<ul class="brb4">
+			<li><a href="/info/index.html">福彩公告</a></li>
+			<li><a href="/info/news.html">福彩新闻</a></li>
+			<li><a href="/info/cover.html">中奖报道</a></li>
+			<li><a href="/info/award.html">公益金使用</a></li>
+      <li><a href="/info/event.html">网站专题</a></li>
+			<li><a href="/info/video.html">公益北京</a></li>
+		</ul>
+	</li>
+	<li class="menuItem"><a href="javascript:;" class="db crt">开奖公告<i class="nav_arr"></i></a>
+		<ul class="brb4">
+			<li><a href="/bulletin/slto.html">双色球</a></li>
+			<li><a href="/bulletin/pk3.html">3D</a></li>
+      <li><a href="/bulletin/qck3.html">快3</a></li>
+			<li><a href="/bulletin/loto.html">七乐彩</a></li>
+			<li><a href="/bulletin/keno.html">快乐8</a></li>
+			<li><a href="/bulletin/trax.html">PK拾</a></li>
+		</ul>
+	</li>
+	<li class="menuItem">
+		<a href="javascript:;" class="db">游戏规则<i class="nav_arr"></i></a>
+		<ul class="brb4">
+			<li><a href="/help/ssq.jsp">双色球</a></li>
+			<li><a href="/help/3d.jsp">3D</a></li>
+			<li><a href="/help/7lc.jsp">七乐彩</a></li>
+			<li><a href="/help/happy8.jsp">快乐8</a></li>
+			<li><a href="/help/pk10.jsp">PK拾</a></li>
+      <li><a href="/help/qck3.html">快3</a></li>
+		</ul>
+	</li>
+	<li class="menuItem">
+		<a href="javascript:;" class="db">数据分析<i class="nav_arr"></i></a>
+		<ul class="brb4">
+			<li><a href="/datacenter/ssq/index.html">双色球</a></li>
+			<li><a href="/datacenter/3d/index.html">3D</a></li>
+      <li><a href="/datacenter/qck3/index.html">快3</a></li>
+      <li><a href="/datacenter/qlc/index.html">七乐彩</a></li>
+		</ul>
+	</li>
+	<li class="menuItem"><a href="/scratch/" class="db rs">刮刮乐</a></li>
+	<li class="menuItem">
+		<a href="javascript:;" class="db">帮助<i class="nav_arr"></i></a>
+		<ul class="brb4">
+			<li><a href="/help/faqreg.jsp">如何注册</a></li>
+			<li><a href="/help/faqaward.jsp">如何提奖</a></li>
+			<li><a href="/help/faqfindpassword.jsp">忘记密码</a></li>
+			<li><a href="/help/ssq.jsp">游戏规则</a></li>
+			<li><a href="/message/mobilesms.jsp">短信订制</a></li>
+		</ul>
+	</li>
+	<li class="menuItem"><a href="http://bbs.bwlc.net" class="db rs">论坛</a></li>
+</ul>
+</div>
+
+	</div>
+	<div id="marquee">
+    
+	<table><tr><td class="marquee_1" nowrap>
+<a href="#">扶老 助残 救孤 济困</a>
+<a href="#">扶老 助残 救孤 济困</a>
+<a href="#">扶老 助残 救孤 济困</a>
+<a href="#">扶老 助残 救孤 济困</a>
+		<a href="#">扶老 助残 救孤 济困</a>
+		<a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+		<a href="#">扶老 助残 救孤 济困</a>
+		<a href="#">扶老 助残 救孤 济困</a>
+		<a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+    <a href="#">扶老 助残 救孤 济困</a>
+		</td>  
+		<td class="marquee_2" nowrap></td></tr>
+	</table>
+</div>
+
+
+<div id="main">
+	
+	<div class="mt20 cf">
+		<script type="text/javascript">
+	window.onload=function (){
+		var oT=document.getElementById('touch');
+		alert_24(oT);
+	}
+</script>
+<div class="ml l brr10">	<h3>帮助信息<img src="/images/blt_hd.png" width="204" height="84" /></h3>
+	<ul>
+		<li><a  class="cur" href="/bulletin/slto.html">开奖公告</a></li>
+        <li><a href="/bulletin/prevslto.html">往期开奖号查询</a></li>
+        <li><a href="/bulletin/video_pk3.html" >开奖视频</a></li>
+        <li><a href="/bulletin/adrslto.html?ltype=120">出奖地址</a></li>
+	</ul>
+	<input type="hidden" id="myFlag" value="1">
+</div>
+
+		<div class="mr" id="lottery_tabs">
+			<ul class="lott_tabs dib">
+				<li><a href="slto.html">双色球</a></li>
+				<li><a href="trax.html">PK拾</a></li>
+				<li class="cur"><a href="keno.html">快乐8</a></li>
+				<li><a href="pk3.html">3D</a></li>
+        <li><a href="qck3.html">快三</a></li>
+				<li><a href="loto.html">七乐彩</a></li>
+			</ul>
+				<div class="lott_cont">
+					<table class="tb" width="100%">
+						<tr>
+							<th width="8%">期号</th>
+							<th width="60%">开奖号码</th>
+							<th width="10%">快乐飞盘</th>
+							<th width="17%">开奖时间</th>
+						</tr>
+						<tr class="">
+								<td>773934</td>
+								<td>02,30,59,76,23,45,42,79,25,51,31,80,18,36,29,69,54,15,67,43</td>
+								<td>01</td>
+								<td>2016-08-05 10:20</td>
+						</tr>
+						<tr class="odd">
+								<td>773933</td>
+								<td>65,45,20,03,39,46,07,44,60,15,31,08,69,29,41,10,66,37,40,09</td>
+								<td>01</td>
+								<td>2016-08-05 10:15</td>
+						</tr>
+						<tr class="">
+								<td>773932</td>
+								<td>47,67,26,51,40,73,15,44,28,58,52,06,56,48,04,38,55,63,17,49</td>
+								<td>01</td>
+								<td>2016-08-05 10:10</td>
+						</tr>
+						<tr class="odd">
+								<td>773931</td>
+								<td>44,19,71,35,40,14,69,55,21,06,38,60,08,47,65,20,32,10,80,23</td>
+								<td>02</td>
+								<td>2016-08-05 10:05</td>
+						</tr>
+						<tr class="">
+								<td>773930</td>
+								<td>16,24,21,63,42,11,57,35,09,22,46,65,19,38,32,72,20,41,23,76</td>
+								<td>02</td>
+								<td>2016-08-05 10:00</td>
+						</tr>
+						<tr class="odd">
+								<td>773929</td>
+								<td>64,25,34,14,70,29,45,24,69,36,44,20,67,48,27,02,37,56,09,46</td>
+								<td>03</td>
+								<td>2016-08-05 09:55</td>
+						</tr>
+						<tr class="">
+								<td>773928</td>
+								<td>65,36,01,18,53,73,09,40,32,77,16,44,23,78,08,30,17,66,49,02</td>
+								<td>05</td>
+								<td>2016-08-05 09:50</td>
+						</tr>
+						<tr class="odd">
+								<td>773927</td>
+								<td>43,01,53,61,06,57,73,38,49,12,79,48,55,29,78,52,54,18,77,60</td>
+								<td>02</td>
+								<td>2016-08-05 09:45</td>
+						</tr>
+						<tr class="">
+								<td>773926</td>
+								<td>17,44,32,67,20,46,29,68,12,31,22,61,54,08,60,43,04,23,56,64</td>
+								<td>01</td>
+								<td>2016-08-05 09:40</td>
+						</tr>
+						<tr class="odd">
+								<td>773925</td>
+								<td>75,44,48,19,70,59,32,03,46,61,09,57,65,28,40,10,76,37,55,24</td>
+								<td>01</td>
+								<td>2016-08-05 09:35</td>
+						</tr>
+						<tr class="">
+								<td>773924</td>
+								<td>26,74,04,31,16,69,56,02,67,39,01,23,65,71,06,52,35,72,14,53</td>
+								<td>02</td>
+								<td>2016-08-05 09:30</td>
+						</tr>
+						<tr class="odd">
+								<td>773923</td>
+								<td>40,09,80,32,52,11,75,42,47,10,66,57,30,03,45,60,04,56,64,18</td>
+								<td>01</td>
+								<td>2016-08-05 09:25</td>
+						</tr>
+						<tr class="">
+								<td>773922</td>
+								<td>47,08,56,24,02,19,50,64,14,40,23,65,15,44,20,67,12,22,18,57</td>
+								<td>02</td>
+								<td>2016-08-05 09:20</td>
+						</tr>
+						<tr class="odd">
+								<td>773921</td>
+								<td>44,64,04,55,66,23,40,09,80,34,51,19,73,43,45,12,72,60,27,03</td>
+								<td>02</td>
+								<td>2016-08-05 09:15</td>
+						</tr>
+						<tr class="">
+								<td>773920</td>
+								<td>64,75,14,38,31,76,15,44,25,79,09,30,17,69,52,06,67,34,02,22</td>
+								<td>04</td>
+								<td>2016-08-05 09:10</td>
+						</tr>
+						<tr class="odd">
+								<td>773919</td>
+								<td>45,33,74,15,47,27,78,09,28,17,60,48,02,58,43,01,19,52,72,11</td>
+								<td>02</td>
+								<td>2016-08-05 09:05</td>
+						</tr>
+						<tr class="">
+								<td>773918</td>
+								<td>22,75,40,49,19,67,54,32,02,47,62,07,53,65,24,38,13,79,33,52</td>
+								<td>02</td>
+								<td>2016-08-04 23:55</td>
+						</tr>
+						<tr class="odd">
+								<td>773917</td>
+								<td>78,16,30,21,71,41,15,65,33,12,26,50,75,17,36,32,77,19,38,27</td>
+								<td>10</td>
+								<td>2016-08-04 23:50</td>
+						</tr>
+						<tr class="">
+								<td>773916</td>
+								<td>15,27,07,79,17,38,12,78,28,37,11,74,42,16,02,35,46,03,41,65</td>
+								<td>01</td>
+								<td>2016-08-04 23:45</td>
+						</tr>
+						<tr class="odd">
+								<td>773915</td>
+								<td>17,63,44,07,30,58,66,24,45,41,71,28,50,37,80,19,40,29,64,54</td>
+								<td>02</td>
+								<td>2016-08-04 23:40</td>
+						</tr>
+						<tr class="">
+								<td>773914</td>
+								<td>06,48,67,10,54,72,25,43,12,80,40,52,24,79,45,50,20,78,57,38</td>
+								<td>02</td>
+								<td>2016-08-04 23:35</td>
+						</tr>
+						<tr class="odd">
+								<td>773913</td>
+								<td>57,09,35,25,68,11,38,15,71,08,19,12,54,39,05,49,31,03,14,44</td>
+								<td>03</td>
+								<td>2016-08-04 23:30</td>
+						</tr>
+						<tr class="">
+								<td>773912</td>
+								<td>41,43,09,66,61,21,02,42,63,04,60,65,19,38,07,77,32,49,14,73</td>
+								<td>02</td>
+								<td>2016-08-04 23:25</td>
+						</tr>
+						<tr class="odd">
+								<td>773911</td>
+								<td>48,33,80,19,36,24,58,49,16,57,45,09,28,54,63,22,47,38,64,23</td>
+								<td>02</td>
+								<td>2016-08-04 23:20</td>
+						</tr>
+						<tr class="">
+								<td>773910</td>
+								<td>05,78,28,48,10,70,35,43,08,68,59,21,03,37,63,04,52,65,12,32</td>
+								<td>03</td>
+								<td>2016-08-04 23:15</td>
+						</tr>
+						<tr class="odd">
+								<td>773909</td>
+								<td>58,49,06,57,34,03,27,53,62,10,38,33,67,11,48,29,72,07,31,13</td>
+								<td>02</td>
+								<td>2016-08-04 23:10</td>
+						</tr>
+						<tr class="">
+								<td>773908</td>
+								<td>69,04,54,70,26,45,09,80,35,52,22,73,46,51,18,72,55,31,03,50</td>
+								<td>02</td>
+								<td>2016-08-04 23:05</td>
+						</tr>
+						<tr class="odd">
+								<td>773907</td>
+								<td>30,51,69,21,46,40,71,22,49,31,79,16,36,23,65,50,15,52,41,01</td>
+								<td>02</td>
+								<td>2016-08-04 23:00</td>
+						</tr>
+						<tr class="">
+								<td>773906</td>
+								<td>16,65,54,24,04,40,56,12,49,62,23,32,14,78,28,48,22,72,38,41</td>
+								<td>02</td>
+								<td>2016-08-04 22:55</td>
+						</tr>
+						<tr class="odd">
+								<td>773905</td>
+								<td>73,13,55,27,76,03,38,16,64,61,02,63,45,01,21,62,66,12,49,39</td>
+								<td>02</td>
+								<td>2016-08-04 22:50</td>
+						</tr>
+					</table>
+					<div class="fc_fanye">
+	          <span>记录<b class="col_red">374001</b>条</span>
+            <span>共<b class="col_red">12467</b>页</span>
+            <span>第<b class="col_red pageNum">1</b>页</span>
+            <a class="firstPage" href="/bulletin/keno.html">首页</a>
+            <a class="prePage" href="/bulletin/keno.html?page=1">上一页</a>
+            <a class="nextPage" href="/bulletin/keno.html?page=2">下一页</a>
+            <a class="lastPage" href="/bulletin/keno.html?page=12467">尾页</a>
+	        </div>
+			</div>
+		</div>
+	</div>
+</div>
+		<div id="footer">		<dl id="channel" class="mt5">
+			<dt class="brt4">客服电话：010-8202 5099</dt>
+			<dd class="brb4 cf menu">
+				<div class="l lbn">
+					<h3>游戏规则</h3>
+					<ul class="dot">
+						<li><a href="/help/ssq.jsp">双色球</a></li>
+						<li><a href="/help/3d.jsp">3D</a></li>
+                        <li><a href="/help/qck3.html">快3</a></li>
+						<li><a href="/help/7lc.jsp">七乐彩</a></li>
+						<li><a href="/help/happy8.jsp">快乐8</a></li>
+						<li><a href="/help/pk10.jsp">PK拾</a></li>
+					</ul>
+				</div>
+				<div class="l">
+					<h3>开奖公告</h3>
+					<ul class="dot">
+<li><a href="/bulletin/slto.html">双色球</a></li>
+                                        <li><a href="/bulletin/pk3.html">3D</a></li>
+                    <li><a href="/bulletin/qck3.html">快3</a></li>
+                                        <li><a href="/bulletin/loto.html">七乐彩</a></li>
+                                        <li><a href="/bulletin/keno.html">快乐8</a></li>
+                                        <li><a href="/bulletin/trax.html">PK拾</a></li>
+					</ul>
+				</div>
+				<div class="l">
+					<h3>走势分析</h3>
+					<ul class="dot">
+							<li><a href="/datacenter/ssq/index.html">双色球</a></li>
+							<li><a href="/datacenter/3d/index.html">3D</a></li>
+                            <li><a href="/datacenter/qck3/index.html">快3</a></li>
+                            <li><a href="/datacenter/qlc/index.html">七乐彩</a></li>
+					</ul>
+				</div>
+				<div class="l">
+					<h3>用户服务</h3>
+					<ul class="dot">
+							<li><a href="/register.jsp">注册用户</a></li>
+							<li><a href="/my/refund.html">提取奖金</a></li>
+							<li><a href="/my/fpassword.html">忘记密码</a></li>
+							<li><a href="/message/mobilesms.jsp">短信订制</a></li>
+					</ul>
+				</div>
+			</dd>
+		</dl>
+		<div id="copyright">
+			<a target="_blank" href="/footer/about_us.jsp">关于我们</a>
+			&nbsp;|&nbsp;
+			<a target="_blank" href="/footer/contact_us.jsp">联系我们</a>
+			&nbsp;|&nbsp;
+			<a target="_blank" href="/footer/map.jsp">网站地图</a>
+			&nbsp;|&nbsp;
+			<a target="_blank" href="/footer/link.jsp">友情链接</a>
+			&nbsp;|&nbsp;
+			<a target="_blank" href="/footer/policy.jsp">隐私条款</a>
+			&nbsp;|&nbsp;
+			<a target="_blank" href="/footer/agreement.jsp">服务协议</a>
+			&nbsp;|&nbsp;
+			<a target="_blank" href="/footer/job.jsp">诚聘英才</a>
+			<br>
+			北京市福利彩票发行中心版权所有 京ICP备09069186号 京公网安备 11010502002997
+			<br>
+			<span class="noice">未成年人不允许购买彩票</span>
+		</div>
+	</div>
+<a href="http://webscan.360.cn/index/checkwebsite/url/www.bwlc.net"><img border="0" src="http://img.webscan.360.cn/status/pai/hash/08de8af2a2f3905a18bd34878c77f740"/></a>
+  <div style="text-align: right;margin-top:-100px;padding-right:20px;padding-bottom: 40px;">
+  <script type="text/javascript">document.write(unescape("%3Cspan id='_ideConac' %3E%3C/span%3E%3Cscript src='http://dcs.conac.cn/js/01/000/0000/60436217/CA010000000604362170002.js' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</div>
+
+<div style="height:0px;line-height: 0px;overflow: hidden;">
+<script>
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F59f2f67e65fdaf7d9a2055f2c512fbc0' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
+</html>
