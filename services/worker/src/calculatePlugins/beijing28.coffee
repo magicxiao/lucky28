@@ -1,5 +1,5 @@
 DB      = require 'database'
-db      = new DB('0', 'system')
+db      = new DB('0', 'lucky28')
 request = require 'request'
 $       = require 'cheerio'
 _       = require 'underscore'

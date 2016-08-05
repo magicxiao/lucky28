@@ -1,5 +1,5 @@
 DB     = require 'database'
-db     = new DB('0', 'system')
+db     = new DB('0', 'lucky28')
 async  = require 'async'
 moment = require 'moment'
 _      = require 'underscore'
